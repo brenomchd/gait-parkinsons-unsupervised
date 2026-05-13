@@ -1,4 +1,4 @@
-# HAILab — Unsupervised Learning for Neurodegenerative Disease Analysis
+# Unsupervised Learning for Neurodegenerative Disease Analysis
 
 This repository contains experiments developed at the **Human and Artificial Intelligence Laboratory (HAILab)** as part of an undergraduate research project focused on the application of **unsupervised machine learning methods** to the analysis of human gait data for the investigation of neurodegenerative diseases.
 
