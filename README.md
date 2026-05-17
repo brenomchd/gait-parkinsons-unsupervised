@@ -1,60 +1,149 @@
-# Unsupervised Learning for Neurodegenerative Disease Analysis
+# Investigation of Unsupervised Methods to Support the Diagnosis of Neurodegenerative Diseases Through Gait Analysis
 
-This repository contains experiments developed at the **Human and Artificial Intelligence Laboratory (HAILab)** as part of an undergraduate research project focused on the application of **unsupervised machine learning methods** to the analysis of human gait data for the investigation of neurodegenerative diseases.
+This repository contains the experiments developed in an undergraduate research project focused on human gait analysis using unsupervised machine learning techniques, with an initial emphasis on Parkinson’s disease.
 
-## 🧠 Motivation
+The project investigates whether latent biomechanical patterns can be identified from gait signals, contributing to the understanding of motor alterations associated with neurodegenerative diseases and to the future development of computational tools for clinical analysis support.
 
-Neurodegenerative diseases such as Parkinson’s disease, Huntington’s disease, and amyotrophic lateral sclerosis progressively affect the nervous system and significantly impact patients’ quality of life. Early diagnosis remains challenging and often depends on specialized clinical evaluation and expensive complementary exams.
+## Context and Motivation
 
-Human gait represents a promising non-invasive biomarker, since alterations in walking patterns frequently emerge in early disease stages. Advances in wearable sensing technologies enable large-scale gait data collection, creating opportunities for computational analysis and discovery of clinically relevant patterns.
+Neurodegenerative diseases may produce progressive alterations in motor control, often observable in gait. Because gait is a functional, repetitive, and measurable activity, it represents a promising biomarker for computational studies of neurological disorders.
 
-While most existing studies rely on supervised learning approaches, labeled biomedical datasets are often scarce. In this context, **unsupervised learning methods** offer an alternative strategy by allowing the identification of latent structures, clusters, and potential disease subtypes without requiring prior labeling.
+A substantial part of the literature relies on supervised approaches, which depend on previously defined clinical labels. In this project, the use of unsupervised methods enables the exploration of the intrinsic structure of the data and the investigation of biomechanical groupings without imposing prior classes, preserving room for the discovery of locomotor profiles that may not yet be evident.
 
-## 🎯 Objectives
+## Objective
 
-The main goal of this repository is to investigate the use of unsupervised learning techniques for:
+To identify latent biomechanical gait patterns in data from individuals with Parkinson’s disease and healthy controls using unsupervised learning techniques, with emphasis on biomechanical interpretability.
 
-* Exploration of gait datasets related to neurodegenerative conditions
-* Extraction and aggregation of gait-derived features
-* Dimensionality reduction for representation learning
-* Clustering of subjects based on gait dynamics
-* Evaluation of latent structures that may relate to disease characteristics or progression
+## Dataset
 
-## 📊 Dataset
+The experiments use the public **Gait in Parkinson’s Disease Database (GaitPDB)**, made available by PhysioNet.
 
-Experiments currently use the [**Gait in Parkinson’s Disease Database (GaitPDB)**](https://www.physionet.org/content/gaitpdb/1.0.0/), which provides temporal gait signals collected from individuals with Parkinson’s disease and healthy controls.
+The dataset contains temporal vertical force signals collected under different experimental gait protocols, including:
 
-## 📁 Repository Structure
+- baseline walking;
+- cognitive interference;
+- rhythmic auditory stimulation;
+- treadmill walking.
 
-```
+## Repository Structure
+
+```text
 .
-├── data/            # Data organization
-├── notebooks/       # Exploratory analysis and experimental workflows
-├── results/         # Figures, tables, and experimental outputs
+├── data/                         # Raw files and organized data
+├── notebooks/                    # Exploratory analyses and initial notebooks
+├── experiments/
+│   ├── baseline/                 # Experiments with baseline conditions
+│   └── protocol_analysis/        # Analyses by experimental protocol
+├── results/                      # Figures, tables, and experimental outputs
+└── README.md
 ```
 
-## 🔬 Methods
+## Experimental Pipeline
 
-Current experiments include:
+The current analysis workflow follows the sequence:
 
-* Exploratory Data Analysis (EDA)
-* Statistical aggregation of gait time-series
-* Feature scaling and preprocessing
-* Principal Component Analysis (PCA)
-* K-Means clustering
-* Internal and external clustering validation metrics
+```text
+Raw gait signals (.txt)
+        ↓
+Biomechanical feature extraction
+        ↓
+Data normalization
+        ↓
+PCA visualization
+        ↓
+K-Means clustering
+        ↓
+Cluster evaluation
+        ↓
+Biomechanical interpretation
+```
 
-## 🚧 Project Status
+## Biomechanical Features
 
-This repository is part of an ongoing undergraduate research project. The codebase is under active development and will evolve as new experiments and methodologies are incorporated.
+The current experiments use statistical features extracted separately for the left and right feet, together with asymmetry measures:
 
-## 👨‍💻 Author
+- `mean_total_L`
+- `mean_total_R`
+- `std_total_L`
+- `std_total_R`
+- `cv_total_L`
+- `cv_total_R`
+- `assimetria_mean`
+- `assimetria_abs`
+- `peak_force_L`
+- `peak_force_R`
 
-**Breno Machado Barros**
-Undergraduate Researcher — HAILab
-Institute of Informatics - UFG
+These features were selected because they combine simplicity, reproducibility, and biomechanical relevance, allowing clearer interpretation of the identified clusters.
 
-## 🤝 Acknowledgements
+## Implemented Methods
 
-* Prof. Dr. Juliana Paula Félix & Prof. Dr. Rogério Lopes Salvini
-* Public biomedical datasets enabling reproducible research
+- `StandardScaler`
+- `PCA`
+- `K-Means`
+- `Silhouette Score`
+- `Davies-Bouldin Index`
+- `Calinski-Harabasz Score`
+
+## Experimental Studies
+
+### 1. Ga Protocol — Cognitive Interference
+
+Analyzed conditions:
+
+- `Ga01` — baseline walking;
+- `Ga02` — simple task;
+- `Ga10` — arithmetic task.
+
+### 2. Ju Protocol — Rhythmic Auditory Stimulation
+
+Analyzed conditions:
+
+- `Ju01` — baseline condition;
+- `Ju02` — RAS 100%;
+- `Ju03` — carryover 1;
+- `Ju04` — RAS 110%;
+- `Ju05` — carryover 2;
+- `Ju06` — carryover 3;
+- `Ju07` — dual task.
+
+### 3. Si Protocol — Treadmill Walking
+
+Study designed to analyze locomotor patterns under treadmill walking conditions.
+
+## Main Findings So Far
+
+The experiments conducted to date indicate that:
+
+- rhythmic auditory stimulation improves the structural organization of gait clusters;
+- the `RAS 110%` condition produces high biomechanical heterogeneity;
+- carryover conditions reveal distinct locomotor adaptation profiles;
+- dual-task conditions tend to reduce cluster separability;
+- gait asymmetry consistently emerges as a relevant biomechanical factor.
+
+These results should still be interpreted within the exploratory scope of the project, but they already suggest that different experimental conditions modulate the latent structure of gait in distinct ways.
+
+## Experiment Organization
+
+The experiments are maintained in modular notebooks containing:
+
+- explicit definition of objectives;
+- methodological justification;
+- commented code blocks;
+- quantitative evaluation of clustering results;
+- biomechanical interpretation of findings.
+
+The project prioritizes scientific traceability and avoids unnecessary methodological complexity before consolidating the fundamental patterns present in the data.
+
+## Project Status
+
+Ongoing project. The next steps include expanding the comparative analysis across protocols, consolidating the biomechanical interpretation of clusters, and progressively improving the documentation of the experiments.
+
+## Author
+
+Breno Machado Barros
+
+## Acknowledgements
+
+- Prof. Dr. Juliana Paula Félix
+- Prof. Dr. Rogério Lopes Salvini
+- PhysioNet, for making the dataset publicly available
